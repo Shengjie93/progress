@@ -15,12 +15,13 @@ def index():
         title = request.form['title']
         total = request.form['total']
         progress = request.form['progress']
+        percent = "%.2f%%" % round(int(progress)/int(total)*100, 2)
 
         if not title or not total or not progress:
             flash('Invalid input.')
             return redirect(url_for('index'))
 
-        project = Project(title=title, total=total, progress=progress)
+        project = Project(title=title, total=total, progress=progress, percent=percent)
         db.session.add(project)
         db.session.commit()
         flash('Item created.')
